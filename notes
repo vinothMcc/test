@@ -1,0 +1,2 @@
+1. obj.create(); => creates a object.
+2. obj.pluck('attr'); => pull the particular property whole data from object 
