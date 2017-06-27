@@ -8,12 +8,12 @@
        type = "text/javascript"></script>
     <script language="javascript">
       $(function(){
-        var SomeModel = Backbone.Model.extend({});
-        someModel = new SomeModel();
-        someModel.bind("change", function(model, collection){
-          alert("You set some_attribute to " + model.get('some_attribute'));
-        });
-        someModel.set({some_attribute: "some value"});
+        // var SomeModel = Backbone.Model.extend({});
+        // someModel = new SomeModel();
+        // someModel.bind("change", function(model, collection){
+        //   alert("You set some_attribute to " + model.get('some_attribute'));
+        // });
+        // someModel.set({some_attribute: "some value"});
         var Credentials = Backbone.Model.extend({});
         var LoginView = Backbone.View.extend({
           el: $("#login-form"),

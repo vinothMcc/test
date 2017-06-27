@@ -1,0 +1,78 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+     <title></title>
+ </head>
+ <body>
+ <div id="app">    
+    <p>Write some text in the box: <input class="greeting-input" type="text" /></p>
+    <div class="greeting-output"></div>
+</div>
+
+<script type="text/template" id="greeting-template">
+    <h1>Hello <%= text %></h1> 
+    <h4>Uppercase: <%= uppercaseText%></h4>
+    <h4>Lowercase: <%= lowercaseText%></h4>
+</script>
+ </body>
+
+ <script src = "https://code.jquery.com/jquery-2.1.3.min.js"
+         type = "text/javascript"></script>
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"
+         type = "text/javascript"></script>
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"
+         type = "text/javascript"></script>
+
+
+      <!-- =============== -->
+      <!-- Javascript code -->
+      <!-- =============== -->
+         
+    <script type="text/javascript">
+        // Our model
+        var Greeting = Backbone.Model.extend({ defaults: { text: 'pppppp'} });
+        var greeting = new Greeting();
+
+        // Our view
+        var GreetingView = Backbone.View.extend({
+            events: {
+                'keyup .greeting-input': 'editText',
+                'keydown .greeting-input': 'editText',
+            },
+            el: document.getElementById('app'),
+            template: _.template($('#greeting-template').html()), 
+            initialize: function() {
+                this.input = this.$el.find('.greeting-input');
+                this.output = this.$el.find('.greeting-output');     
+                console.log(this.model);
+                // this.listenTo(this.model,'change', this.render);
+                this.model.on('change', this.render, this);
+                // this.model.on('change', this.render);
+            },
+            render: function() {
+                console.log(this.model.get('text'),'=========')
+                var text = this.model.get('text')
+                console.log("Rendering Text : ", text);
+                var templateData = {
+                    text: text,
+                    uppercaseText: text.toUpperCase(),
+                    lowercaseText: text.toLowerCase()
+                };
+               
+                this.output.html(this.template(templateData));        
+                return this;
+            },
+            editText: function(e) {
+                // For smooth effect we'll use 'keyup' to grab text, but 'keydown' for Delete & Backspace
+                if (((e.which === 8 || e.which === 46) && e.type === 'keydown') || (e.type === 'keyup')) {   
+                     this.model.set('text', this.input.val().trim());
+                }            
+            }
+        });
+
+        var greetingView = new GreetingView({ model: greeting });
+        greetingView.render();
+    </script>
+
+
+ </html>
